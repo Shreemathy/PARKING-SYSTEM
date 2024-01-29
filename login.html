@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .switch {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .switch a {
+            text-decoration: none;
+            color: #333;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+
+        .switch a:hover {
+            color: #4caf50;
+        }
+
+        /* Style for hiding and showing forms */
+        #loginForm {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="signupForm">
+            <h2>Sign Up</h2>
+            <form onsubmit="signup(); return false;">
+                <div class="inputBox">
+                    <input type="email" id="signupEmail" placeholder="EMAIL" />
+                </div>
+                <div class="inputBox">
+                    <input type="password" id="signupPassword" placeholder="PASSWORD" />
+                </div>
+                <div class="inputBox">
+                    <button type="submit">Sign Up</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="loginForm">
+            <h2>Login</h2>
+            <form onsubmit="login(); return false;">
+                <div class="inputBox">
+                    <input type="email" id="loginEmail" placeholder="EMAIL" />
+                </div>
+                <div class="inputBox">
+                    <input type="password" id="loginPassword" placeholder=" PASSWORD" />
+                </div>
+                <div class="inputBox">
+                    <button type="submit">Login</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="switch">
+            <a href="#" onclick="showForm('signupForm')">Sign Up</a>
+            <span>|</span>
+            <a href="#" onclick="showForm('loginForm')">Login</a>
+        </div>
+    </div>
+
+
+    <script src="https://www.gstatic.com/firebasejs/10.0.2/firebase-database.js"></script>
+
+   
+    <script>
+        // Your JavaScript code remains unchanged
+        import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+        const firebaseConfig = {
+            apiKey: "AIzaSyAAUk1FYDBKL_9Qx-wo3KRZTCLlaa74yL0",
+            authDomain: "carpark-9212b.firebaseapp.com",
+            databaseURL: "https://carpark-9212b-default-rtdb.firebaseio.com",
+            projectId: "carpark-9212b",
+            storageBucket: "carpark-9212b.appspot.com",
+            messagingSenderId: "874823355902",
+        appId: "1:874823355902:web:5864d96b977f010d0084af",
+  measurementId: "G-4ELQD6LH6Y"
+            // Your Firebase configuration remains unchanged
+        };
+
+        // Initialize Firebase
+        // Initialize Realtime Database
+        var database = firebase.database();
+
+        firebase.initializeApp(firebaseConfig);
+
+        // Reference your database
+        var userDB = firebase.database().ref("users");
+        // Get the user's unique ID
+//var userId = firebase.auth().currentUser.uid;
+        //signupfunction
+        function signup() {
+
+    var email = document.getElementById('signupEmail').value;
+    var password = document.getElementById('signupPassword').value;
+
+    // Create user with email and password
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            // User signed up successfully
+            var user = userCredential.user;
+            alert('User signed up successfully: ' + user.email);
+              // Store user information in the Realtime Database
+              var usersRef = database.ref("users");
+            var userId = user.uid;
+            usersRef.child(userId).set({
+                email: email,
+                password:password,
+            });
+
+            // Redirect to the login form after successful signup
+            showForm('loginForm');
+        })
+        .catch((error) => {
+            // Handle errors
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            alert('Error: ' + errorMessage);
+        });
+}
+
+function login() {
+    var email = document.getElementById('loginEmail').value;
+    var password = document.getElementById('loginPassword').value;
+
+    // Sign in with email and password
+    firebase.auth().signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            // User signed in successfully
+            var user = userCredential.user;
+            alert('User signed in successfully: ' + user.email);
+
+            // You can redirect to another page or perform additional actions here
+        })
+        .catch((error) => {
+            // Handle errors
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            alert('Error: ' + errorMessage);
+        });
+}
+
+function showForm(formId) {
+    // Hide all forms
+    document.getElementById('signupForm').style.display = 'none';
+    document.getElementById('loginForm').style.display = 'none';
+
+    // Show the selected form
+    document.getElementById(formId).style.display = 'block';
+}
+
+    </script>
+</body>
+
+</html>

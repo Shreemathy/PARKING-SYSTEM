@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GeoJSON Multiple Places</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    #map {
+      height: 500px;
+    }
+    .label {
+      background-color: white;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+ var map = L.map('map').setView([11.0055, 76.9552], 14);  // Centered around Peelamedu coordinates
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+  var placesGeoJSON = {
+    "type": "FeatureCollection",
+    "features": [
+      // Saravanampatti and Subzones
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [76.9812, 11.0815]  // Saravanampatti coordinates
+        },
+        "properties": {
+          "name": "Saravanampatti",
+          "message": "Saravanampatti area in Coimbatore"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [76.977, 11.081]  // Prozone Mall coordinates (Placeholder, replace with actual coordinates)
+        },
+        "properties": {
+          "name": "Prozone Mall",
+          "message": "PARKING DETAILS:<br>TOTAL PARKING SLOTS:10<br>FACILITIES:Tea/Coffee,Biscuits,Juice<br>TO BOOK SLOTS:"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [76.984, 11.083]  // Echanari Temple coordinates (Placeholder, replace with actual coordinates)
+        },
+        "properties": {
+          "name": "Echanari Temple",
+          "message": "PARKING DETAILS:<br>TOTAL PARKING SLOTS:15<br>FACILITIES:Tea/Coffee,Biscuits,Juice<br>TO BOOK SLOTS:"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [76.977, 11.076]  // Kovai Kutralam coordinates (Placeholder, replace with actual coordinates)
+        },
+        "properties": {
+          "name": "Kovai Kutralam",
+          "message": "PARKING DETAILS:<br>TOTAL PARKING SLOTS:10<br>FACILITIES:Tea/Coffee,Biscuits,Juice<br>TO BOOK SLOTS:"
+        }
+      },
+      // Ukkadam and Subzones
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [76.9646, 11.0117]  // Ukkadam coordinates
+        },
+        "properties": {
+          "name": "Ukkadam",
+          "message": "Center location in Coimbatore"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [76.961, 11.008]  // Ukkadam Lake coordinates (Placeholder, replace with actual coordinates)
+        },
+        "properties": {
+          "name": "Ukkadam Lake",
+          "message": "PARKING DETAILS:<br>TOTAL PARKING SLOTS:20<br>FACILITIES:Tea/Coffee,Snacks,CoolDrinks<br>TO BOOK SLOTS:"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [76.967, 11.010]  // Sungam Lake coordinates (Placeholder, replace with actual coordinates)
+        },
+        "properties": {
+          "name": "Sungam Lake",
+          "message": "PARKING DETAILS:<br>TOTAL PARKING SLOTS:20<br>FACILITIES:Tea/Coffee,Snacks,CoolDrinks<br>TO BOOK SLOTS:"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [76.958, 11.014]  // Coimbatore Junction coordinates (Placeholder, replace with actual coordinates)
+        },
+        "properties": {
+          "name": "Coimbatore Junction",
+          "message": "PARKING DETAILS:<br>TOTAL PARKING SLOTS:20<br>FACILITIES:Tea/Coffee,Snacks,CoolDrinks<br>TO BOOK SLOTS:"
+        }
+      },
+      // Peelamedu and Subzones
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [77.0245, 11.0304]  // Peelamedu coordinates
+        },
+        "properties": {
+          "name": "Peelamedu",
+          "message": "Peelamedu area in Coimbatore"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [77.027, 11.033]  // PSG Hospital coordinates (Placeholder, replace with actual coordinates)
+        },
+        "properties": {
+          "name": "PSG Hospital",
+          "message": "PARKING DETAILS:<br>TOTAL PARKING SLOTS:30<br>FACILITIES:Tea/Coffee<br>TO BOOK SLOTS:"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [77.026, 11.029]  // FunMall coordinates (Placeholder, replace with actual coordinates)
+        },
+        "properties": {
+          "name": "FunMall",
+         // "message": "PARKING DETAILS:<br>TOTAL PARKING SLOTS:20<br>FACILITIES:Tea/Coffee,CoolDrinks<br>TO BOOK SLOTS:<href>http://127.0.0.1:5500/Parking.html</href>"
+         "message": "PARKING DETAILS:<br>TOTAL PARKING SLOTS:20<br>FACILITIES:Tea/Coffee,CoolDrinks<br>TO BOOK SLOTS: <a href='http://127.0.0.1:5500/Parking.html'>Click here</a>"
+
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [77.028, 11.027]  // Oxyzone coordinates (Placeholder, replace with actual coordinates)
+        },
+        "properties": {
+          "name": "Oxyzone",
+          "message": "PARKING DETAILS:<br>TOTAL PARKING SLOTS:15<br>FACILITIES:Tea/Coffee,Snacks,CoolDrinks<br>TO BOOK SLOTS:"
+        }
+      },
+      // Add more features as needed
+    ]
+  };
+
+  L.geoJSON(placesGeoJSON, {
+    onEachFeature: function (feature, layer) {
+      if (feature.geometry.type === 'Point') {
+        layer.bindPopup('<b>' + feature.properties.name + '</b><br>' + feature.properties.message);
+      }
+    }
+  }).addTo(map);
+
+  // Function to create a custom marker with label
+  function createCustomMarker(latlng, label) {
+    return L.marker(latlng, {
+      icon: L.divIcon({
+        className: 'label',
+        html: label,
+        iconSize: [80, 30],
+        iconAnchor: [40, 15]
+      })
+    });
+  }
+
+  // Main Zone Layer
+  var mainZoneLayer = L.geoJSON(placesGeoJSON, {
+    filter: function (feature) {
+      return feature.geometry.type === 'Point' && ["Ukkadam", "Peelamedu", "Saravanampatti"].includes(feature.properties.name);
+    },
+    pointToLayer: function (feature, latlng) {
+      return createCustomMarker(latlng, feature.properties.name);
+    }
+  }).addTo(map);
+
+  // Subzone Layer (Initially Empty)
+  var subZoneLayer = L.geoJSON(null);
+
+  // Click event on mainZoneLayer
+  mainZoneLayer.on('click', function (event) {
+    var clickedZone = event.layer.feature.properties.name;
+
+    // Set the map view to include the main zone feature only
+    map.setView(event.layer.getLatLng(), 14);
+
+    // Remove existing subZoneLayer if exists
+    if (map.hasLayer(subZoneLayer)) {
+      map.removeLayer(subZoneLayer);
+    }
+
+    // Create new Subzone Layer
+    subZoneLayer = L.geoJSON(placesGeoJSON, {
+      filter: function (subzone) {
+        return subzone.properties.name.includes(clickedZone) && subzone.geometry.type === 'Point';
+      },
+      onEachFeature: function (subfeature, sublayer) {
+        sublayer.bindPopup('<b>' + subfeature.properties.name + '</b><br>' + subfeature.properties.message);
+      }
+    }).addTo(map);
+  });
+
+</script>
+
+</body>
+</html>
